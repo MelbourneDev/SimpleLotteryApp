@@ -12,5 +12,7 @@ namespace Simple_Lottery_App.Data
         
         public DbSet<User> Users { get; set; }
         public DbSet<LotteryEntry> LotteryEntries { get; set;}
+        public DbSet<Lottery> Lottery { get; set; }
+
     }
 }

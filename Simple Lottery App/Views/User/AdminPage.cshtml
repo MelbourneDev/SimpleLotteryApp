@@ -1,1 +1,30 @@
-﻿
+﻿@* AdminPage.cshtml *@
+
+@{
+    var latestLottery = ViewBag.LatestLottery as Lottery;
+}
+
+<h2>Admin Page</h2>
+
+<form asp-action="StartLotto" method="post">
+    <button type="submit">Start Lotto</button>
+</form>
+
+<form asp-action="EndLotto" method="post">
+    <button type="submit">End Lotto</button>
+</form>
+
+@if (latestLottery != null && latestLottery.Entries.Any())
+{
+    <h3>Users Entered in Lotto:</h3>
+    <ul>
+        @foreach (var entry in latestLottery.Entries)
+        {
+            <li>@entry.User.UserName (@entry.UserId)</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No active lottery or no users have entered the lottery yet.</p>
+}
