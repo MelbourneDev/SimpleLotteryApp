@@ -1,0 +1,14 @@
+﻿@model Simple_Lottery_App.Models.LoginViewModel
+
+<form method="post" asp-action="Login">
+    <label for="userId">User ID:</label>
+    <input type="text" id="userId" name="UserId" required>
+    <label for="userName">Username:</label>
+    <input type="text" id="userName" name="UserName" required>
+    <button type="submit">Login</button>
+</form>
+
+@if (ViewBag.LoginError != null)
+{
+    <p style="color: red;">@ViewBag.LoginError</p>
+}
