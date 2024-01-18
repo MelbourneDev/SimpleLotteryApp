@@ -1,20 +1,52 @@
-﻿@* UserPage.cshtml in Views/User *@
+﻿@* UserPage.cshtml *@
+
+@{
+    var currentLottery = ViewBag.CurrentLottery as Lottery;
+    var isUserEntered = ViewBag.IsUserEntered as bool? ?? false;
+    var currentUserId = ViewBag.CurrentUserId;
+    var canEnterLotto = currentLottery != null && currentLottery.IsActive && !isUserEntered;
+    var isLotteryActive = currentLottery != null && currentLottery.IsActive;
+}
 
 <h2>User Page</h2>
-
-<form asp-action="EnterLotto" method="post">
-    <button type="submit">Enter Lotto</button>
+<form asp-action="Logout" asp-controller="User" method="post">
+    <button type="submit">Logout</button>
 </form>
-
-<form asp-action="LeaveLotto" method="post">
-    <button type="submit">Leave Lotto</button>
-</form>
-
-@if (ViewBag.CurrentLottoId != null)
+<hr />
+@if (canEnterLotto)
 {
-    <p>You are currently entered in Lotto: @ViewBag.CurrentLottoId</p>
+    <form asp-action="EnterLotto" method="post">
+        <button type="submit">Enter Lotto</button>
+    </form>
 }
 else
 {
-    <p>You are not entered in any Lotto.</p>
+    <form asp-action="LeaveLotto" method="post">
+        <button type="submit" @(isUserEntered ? "" : "disabled")>Leave Lotto</button>
+    </form>
+}
+
+@if (isLotteryActive && isUserEntered)
+{
+    <p>You are currently entered in Lotto: @currentLottery.LotteryId</p>
+}
+else if (isLotteryActive && !isUserEntered)
+{
+    <p>Lotto @currentLottery.LotteryId is active. You are not entered in this Lotto.</p>
+}
+else if (!isLotteryActive)
+{
+    <p>There is no current Lotto.</p>
+}
+
+@if (ViewBag.PastLotteryId != null)
+{
+    if (ViewBag.UserWon)
+    {
+        <p>Congratulations! You won the Lotto: @ViewBag.PastLotteryId</p>
+    }
+    else if (ViewBag.UserParticipated)
+    {
+        <p>Lotto @ViewBag.PastLotteryId has ended. You did not win this time, unfortunately.</p>
+    }
 }

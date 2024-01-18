@@ -2,29 +2,62 @@
 
 @{
     var latestLottery = ViewBag.LatestLottery as Lottery;
+    var canStartNewLottery = latestLottery == null || !latestLottery.IsActive;
 }
 
 <h2>Admin Page</h2>
-
+<form asp-action="Logout" asp-controller="User" method="post">
+    <button type="submit">Logout</button>
+</form>
+<hr />
 <form asp-action="StartLotto" method="post">
-    <button type="submit">Start Lotto</button>
+    <button type="submit" @(canStartNewLottery ? "" : "disabled")>Start Lotto</button>
 </form>
-
+<br />
 <form asp-action="EndLotto" method="post">
-    <button type="submit">End Lotto</button>
+    <button type="submit" @(latestLottery != null && latestLottery.IsActive ? "" : "disabled")>End Lotto</button>
 </form>
 
-@if (latestLottery != null && latestLottery.Entries.Any())
+
+@if (latestLottery != null && latestLottery.IsActive)
 {
-    <h3>Users Entered in Lotto:</h3>
-    <ul>
-        @foreach (var entry in latestLottery.Entries)
-        {
-            <li>@entry.User.UserName (@entry.UserId)</li>
-        }
-    </ul>
+    <h3>Current Lotto ID: @latestLottery.LotteryId</h3>
+
+    @if (latestLottery.Entries.Any())
+    {
+        <h3>Users Entered in Lotto:</h3>
+        <ul>
+            @foreach (var entry in latestLottery.Entries)
+            {
+                <li>@entry.User.UserName (@entry.UserId)</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No users have entered the lottery yet.</p>
+    }
 }
 else
 {
-    <p>No active lottery or no users have entered the lottery yet.</p>
+    <p>There are currently no active lottos.</p>
+}
+
+
+
+@if (TempData["WinnerUserId"] != null)
+{
+    var winnerUserId = TempData["WinnerUserId"].ToString();
+    var winnerUserName = TempData["WinnerUserName"].ToString();
+    var participantUserIds = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(TempData["ParticipantUserIds"].ToString());
+
+    <p>Winner of the Last Lotto: @winnerUserName (User ID: @winnerUserId)</p>
+
+    <h3>Participants in the Last Lotto:</h3>
+    <ul>
+        @foreach (var userId in participantUserIds)
+        {
+            <li>User ID: @userId</li>
+        }
+    </ul>
 }

@@ -126,3 +126,4 @@ C:\Users\matth\OneDrive\Desktop\simple-lottery-app\Simple Lottery App\Simple Lot
 C:\Users\matth\OneDrive\Desktop\simple-lottery-app\Simple Lottery App\Simple Lottery App\obj\Debug\net8.0\Simple Lottery App.pdb
 C:\Users\matth\OneDrive\Desktop\simple-lottery-app\Simple Lottery App\Simple Lottery App\obj\Debug\net8.0\Simple Lottery App.genruntimeconfig.cache
 C:\Users\matth\OneDrive\Desktop\simple-lottery-app\Simple Lottery App\Simple Lottery App\obj\Debug\net8.0\ref\Simple Lottery App.dll
+C:\Users\matth\OneDrive\Desktop\simple-lottery-app\Simple Lottery App\Simple Lottery App\bin\Debug\net8.0\Newtonsoft.Json.dll

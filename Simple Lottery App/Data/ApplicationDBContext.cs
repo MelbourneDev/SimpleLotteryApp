@@ -14,5 +14,7 @@ namespace Simple_Lottery_App.Data
         public DbSet<LotteryEntry> LotteryEntries { get; set;}
         public DbSet<Lottery> Lottery { get; set; }
 
+        public DbSet<PastLottery> PastLotteries { get; set; }
+
     }
 }
